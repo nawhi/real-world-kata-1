@@ -6,13 +6,15 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import spark.Spark;
 import upsd.acceptance.AT_GetUserById;
+import upsd.acceptance.AT_UserNotFound;
 import upsd.api.Server;
 import upsd.helpers.Helper;
 import upsd.repositories.UserRepository;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        AT_GetUserById.class
+        AT_GetUserById.class,
+        AT_UserNotFound.class
 })
 public class AcceptanceTestSuite {
 
