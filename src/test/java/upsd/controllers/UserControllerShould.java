@@ -45,6 +45,20 @@ public class UserControllerShould {
         assertThat(actual, is(jsonStringFor(USER)));
     }
 
+    @Test
+    public void return_user_not_found() {
+        given(request.params(":id")).willReturn("1");
+        given(userRepository.getBy(1)).willReturn(Optional.empty());
+
+        String jSonString = new JsonObject()
+                .add("title", "User Not Found")
+                .toString();
+
+        String actual = userController.getById(request, response);
+
+        assertThat(actual, is(jSonString));
+    }
+
     private String jsonStringFor(User user) {
         return new JsonObject()
                 .add("id", user.id())

@@ -17,11 +17,19 @@ public class UserController {
     public String getById(Request req, Response res) {
         int id = Integer.parseInt(req.params(":id"));
 
-        User userFound = userRepository.getBy(id).get();
-
         res.type("application/json");
 
-        return jsonStringFor(userFound);
+        if (userRepository.getBy(id).isPresent()) {
+            User userFound = userRepository.getBy(id).get();
+            res.status(200);
+            return jsonStringFor(userFound);
+        }
+
+        res.status(404);
+        return  new JsonObject()
+                    .add("title", "User Not Found")
+                    .toString();
+
     }
 
     private String jsonStringFor(User user) {
