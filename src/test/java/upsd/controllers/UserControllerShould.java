@@ -50,19 +50,8 @@ public class UserControllerShould {
         given(request.params(":id")).willReturn("1");
         given(userRepository.getBy(1)).willReturn(Optional.empty());
 
-        String jSonString = new JsonObject()
-                .add("title", "User Not Found")
-                .toString();
+        userController.getById(request, response);
 
-        String actual = userController.getById(request, response);
-
-        assertThat(actual, is(jSonString));
-    }
-
-    private String jsonStringFor(User user) {
-        return new JsonObject()
-                .add("id", user.id())
-                .add("name", user.name())
-                .toString();
+        verify(jsonStringCreator).notFound();
     }
 }
