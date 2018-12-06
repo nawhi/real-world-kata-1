@@ -5,7 +5,6 @@ import upsd.domain.User;
 import upsd.helpers.Helper;
 
 import static io.restassured.RestAssured.get;
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 
 public class AT_GetAllUsers {
@@ -20,8 +19,6 @@ public class AT_GetAllUsers {
         get("/users").then()
                 .statusCode(200)
                 .contentType("application/json")
-                .body("users.size()", is(4))
-                .body("users.id", hasItems(1, 2, 3, 4))
-                .body("users.name", hasItems("sam", "nick", "scott", "andre"));
+                .body("users.size()", is(4));
     }
 }
