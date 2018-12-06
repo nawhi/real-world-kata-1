@@ -8,10 +8,11 @@ import upsd.repositories.UserRepository;
 public class UserController {
 
     private final UserRepository userRepository;
-    private final JsonStringCreator jsonStringCreator = new JsonStringCreator();
+    private final JsonStringCreator jsonStringCreator;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, JsonStringCreator jsonStringCreator) {
         this.userRepository = userRepository;
+        this.jsonStringCreator = jsonStringCreator;
     }
 
     public String getById(Request req, Response res) {
@@ -27,7 +28,6 @@ public class UserController {
 
         res.status(404);
         return jsonStringCreator.notFound();
-
     }
 
     public String getAll(Request req, Response res) {

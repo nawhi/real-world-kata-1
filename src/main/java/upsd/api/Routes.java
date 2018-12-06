@@ -1,5 +1,6 @@
 package upsd.api;
 
+import upsd.controllers.JsonStringCreator;
 import upsd.controllers.UserController;
 import upsd.repositories.UserRepository;
 
@@ -10,7 +11,7 @@ class Routes {
     private UserController userController;
 
     Routes(UserRepository userRepository) {
-        userController = new UserController(userRepository);
+        userController = new UserController(userRepository, new JsonStringCreator());
     }
 
     void setup() {

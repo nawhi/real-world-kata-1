@@ -23,13 +23,15 @@ public class UserControllerShould {
     private UserController userController;
     private final User USER = new User(1, "bob");
     private UserRepository userRepository;
+    private JsonStringCreator jsonStringCreator;
 
     @Before
     public void setUp() {
         request = mock(Request.class);
         response = mock(Response.class);
         userRepository = mock(UserRepository.class);
-        userController = new UserController(userRepository);
+        jsonStringCreator = mock(JsonStringCreator.class);
+        userController = new UserController(userRepository, jsonStringCreator);
     }
 
     @Test
@@ -37,12 +39,10 @@ public class UserControllerShould {
         given(request.params(":id")).willReturn("1");
         given(userRepository.getBy(1)).willReturn(Optional.of(USER));
 
-
-        String actual = userController.getById(request, this.response);
-
+        userController.getById(request, this.response);
 
         verify(response).type("application/json");
-        assertThat(actual, is(jsonStringFor(USER)));
+        verify(jsonStringCreator).jsonStringFor(USER);
     }
 
     @Test
