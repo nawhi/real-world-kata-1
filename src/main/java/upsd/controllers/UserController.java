@@ -1,6 +1,5 @@
 package upsd.controllers;
 
-import com.eclipsesource.json.JsonObject;
 import spark.Request;
 import spark.Response;
 import upsd.domain.User;
@@ -9,6 +8,7 @@ import upsd.repositories.UserRepository;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final JsonStringCreator jsonStringCreator = new JsonStringCreator();
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -22,21 +22,12 @@ public class UserController {
         if (userRepository.getBy(id).isPresent()) {
             User userFound = userRepository.getBy(id).get();
             res.status(200);
-            return jsonStringFor(userFound);
+            return jsonStringCreator.jsonStringFor(userFound);
         }
 
         res.status(404);
-        return  new JsonObject()
-                    .add("title", "User Not Found")
-                    .toString();
+        return jsonStringCreator.notFound();
 
-    }
-
-    private String jsonStringFor(User user) {
-        return new JsonObject()
-                .add("id", user.id())
-                .add("name", user.name())
-                .toString();
     }
 
     public String getAll(Request req, Response res) {
