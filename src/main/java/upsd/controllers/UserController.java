@@ -38,4 +38,8 @@ public class UserController {
                 .add("name", user.name())
                 .toString();
     }
+
+    public String getAll(Request req, Response res) {
+        throw new UnsupportedOperationException("TODO");
+    }
 }
