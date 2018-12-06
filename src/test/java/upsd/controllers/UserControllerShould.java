@@ -18,6 +18,7 @@ import static org.mockito.Mockito.verify;
 
 public class UserControllerShould {
 
+    public static final String JSON = "application/json";
     private Request request;
     private Response response;
     private UserController userController;
@@ -41,7 +42,8 @@ public class UserControllerShould {
 
         userController.getById(request, this.response);
 
-        verify(response).type("application/json");
+        verify(response).type(JSON);
+        verify(response).status(200);
         verify(jsonStringCreator).jsonStringFor(USER);
     }
 
@@ -52,6 +54,9 @@ public class UserControllerShould {
 
         userController.getById(request, response);
 
+        verify(response).type(JSON);
+        verify(response).status(404);
         verify(jsonStringCreator).notFound();
     }
+
 }
